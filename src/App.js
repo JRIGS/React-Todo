@@ -21,6 +21,35 @@ class App extends React.Component {
       }
     }
   }
+  addTodoEntry = (e) => {
+    e.preventDefault();
+    const todoEntries = this.state.todoEntries.slice();
+    const todoEntry = {
+      task: this.state.todoEntry.task,
+      id: Date.now(),
+      completed: false,
+    }
+    const todoEntryBlank = {
+      task: null,
+      id: null,
+      completed: false,
+    }
+    todoEntries.push(todoEntry);
+    this.setState({todoEntries: todoEntries, todoEntry: todoEntryBlank});
+  }
+
+  addToDoHandler = event => {
+    console.log(event.target.name);
+
+    this.setState({todoEntry: {
+      task: event.target.value,
+      id: Date.now(),
+      completed: false
+    }})
+  }
+
+
+
   render() {
     return (
       <div>
