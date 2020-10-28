@@ -49,15 +49,45 @@ class App extends React.Component {
   }
 
 
+  removeCompletedTodos = () => {
+    console.log('Removed');
+    const todoEntriesCopy = this.state.todoEntries.slice();
+    console.log(todoEntriesCopy);
+    const uncompletedTodoEntries = todoEntriesCopy.filter(todoEntry =>
+      todoEntry.completed === false
+      )
+    console.log(uncompletedTodoEntries);
+    this.setState({todoEntries: uncompletedTodoEntries})
+  }
+
+  todoCompletedToggle = (todoEntryId) => {
+    const todoEntriesCopy = this.state.todoEntries.slice();
+    for (let i = 0; i < todoEntriesCopy.length; i++) {
+      if (todoEntriesCopy[i].id === todoEntryId) {
+        todoEntriesCopy[i].completed = !todoEntriesCopy[i].completed;
+      }
+    }
+    return this.setState({todoEntries: todoEntriesCopy})
+  }
+
+
 
   render() {
     return (
       <div>
         <h1>To-Do App</h1>
         <h2>Add task below</h2>
-        <TodoForm />
+        <TodoForm 
+        todoEntry = {this.state.todoEntry}
+        addTodoHandler = {this.addToDoHandler}
+        addTodoEntry = {this.addTodoEntry}
+        removeCompletedTodos = {this.removeCompletedTodos}
+        />
         <h2>List of Todo Tasks</h2>
-        <TodoList />
+        <TodoList
+        todoEntries = {this.state.todoEntries}
+        todoCompletedToggle = {this.todoCompletedToggle}
+        />
       </div>
     );
   }
